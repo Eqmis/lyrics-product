@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lyrics-product/static/css/main.21a5769f.css",
+    "main.js": "/lyrics-product/static/js/main.21e45a73.js",
+    "index.html": "/lyrics-product/index.html",
+    "main.21a5769f.css.map": "/lyrics-product/static/css/main.21a5769f.css.map",
+    "main.21e45a73.js.map": "/lyrics-product/static/js/main.21e45a73.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.21a5769f.css",
+    "static/js/main.21e45a73.js"
+  ]
+}
