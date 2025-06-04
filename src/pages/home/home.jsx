@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getRandomItems } from "../utils/utils";
 import lyricsArr from "../../lyrics.json";
+import { useNavigate } from 'react-router-dom';
 import "./home.css";
 
 const FALSECOUNT = 3;
 
 const Home = () => {
+  const navigate = useNavigate();
   const [lyricsData, setlyricsData] = useState([]);
   const [lyricsAnswerArr, setLyricsAnswerArr] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +19,16 @@ const Home = () => {
     setlyricsData(result);
     setLyricsAnswerArr(generateQuestionChoices(result, lyricsArr.join().split(',')));
   }, []);
+
+  // 跳转分数页面
+  const handleSubmit = () => {
+    const result = {
+      total: calculateScore(),
+      questions: lyricsData,
+    };
+
+    navigate('/summary', { state: result });
+  };
 
   // 🛠 修复滚动更新 currentIndex
   useEffect(() => {
@@ -162,9 +174,9 @@ const Home = () => {
     <div className="lyrics-slider-wrapper">
       {
         currentIndex !== 20 && <div className="lyrics-header">
-          <button onClick={handlePrev} disabled={currentIndex === 0}>⬆️ 上一题</button>
+          <button className="lyrics-button" onClick={handlePrev} disabled={currentIndex === 0}>⬆️ 上一题</button>
           <span>{currentIndex + 1} / {lyricsData.length}</span>
-          <button onClick={handleNext} disabled={currentIndex === lyricsData.length - 1}>⬇️ 下一题</button>
+          <button className="lyrics-button" onClick={handleNext} disabled={currentIndex === lyricsData.length - 1}>⬇️ 下一题</button>
         </div>
       }
       <div className="lyrics-container" ref={containerRef}>
@@ -194,6 +206,10 @@ const Home = () => {
                   <div className="submit-result">
                     <p>🎉 全部完成！</p>
                     <p>你的得分是：<strong>{calculateScore()}</strong> 分</p>
+                    <button style={{
+                      height: '50px',
+                      width: '150px'
+                    }} className="lyrics-button" onClick={handleSubmit}>查看详情</button>
                   </div>
                 ) : (
                   <div className="submit-warning">
